@@ -1,0 +1,166 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25.Ara.2016, 03:13:03
+    Author     : CODER ACJHP
+*/
+html {
+	height: 100%;
+}
+body {
+	width: 100%;
+	height: 100%;
+	font-family: verdana;
+	font-size: 15px;
+	background: linear-gradient(to top, #00C9FF, #92FE9D);
+	background-repeat: no-repeat;
+	-webkit-background-size: cover; 
+	-moz-background-size : cover;
+	-o-background-size : cover; 
+	background-size : cover; 
+	font-family :verdana;
+	font-size: 25px;
+	display: block;
+	font-family: verdana;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+input {
+	width: 300px;
+	height: 40px;
+	margin-left: 80px;
+}
+
+.wrong {
+	width: 80px;
+	height: 40px;
+	margin-left: 0;
+	text-align: right;
+	font-family: verdana;
+	background-image: url('../images/rsz_wrong.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.correct {
+	width: 80px;
+	height: 40px;
+	margin-right: 0;
+	text-align: right;
+	font-family: verdana;
+	background-image: url('../images/rsz_correct.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.addUser {
+	width: 110px;
+	height: 40px;
+	margin-right: 0;
+	text-align: right;
+	font-family: verdana;
+	background-image: url('../images/addUser.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.createUser {
+	width: 80px;
+	height: 40px;
+	font-family: verdana;
+	text-decoration: none;
+	background-color: #EEEEEE;
+	color: #333333;
+	padding: 2px 6px 2px 6px;
+	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	border-left: 1px solid #CCCCCC;
+}
+
+.view {
+	width: 110px;
+	height: 40px;
+	text-align: right;
+	font-family: verdana;
+	background-image: url('../images/view.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.logut {
+	width: 110px;
+	height: 40px;
+	text-align: right;
+	font-family: verdana;
+	background-image: url('../images/logout.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.back {
+	width: 110px;
+	height: 40px;
+	font-family: verdana;
+	background-image: url('../images/back.png');
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.mySlides {
+	display: none;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border: 3px solid #000000;
+}
+
+.hrDiv {
+	background-color: #ffffff;
+	border: 5px;
+	padding: 30px;
+	margin: auto;
+}
+
+.hrDiv2 {
+	background-color: #ffffff;
+	font-family: verdana;
+}
+
+.pad {
+	margin: 0;
+	display: inline-block;
+	float: contour;
+}
+
+.viewTable {
+	margin: 0;
+	font-size: 0;
+}
+
+th {
+	color: #cc0000;
+}
+
+.about {
+	width: 400px;
+	height: 40px;
+	margin-left: 80px;
+}
+
+p {
+	margin-top: 20px;
+	color: black;
+	font-family: verdana;
+	font-size: 15px;
+}
+
+.inputStyle {
+	width: 150px;
+	height: 40px;
+}
