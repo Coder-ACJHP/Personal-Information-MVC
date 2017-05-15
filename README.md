@@ -2,13 +2,16 @@
 <label>Servlet-JSP, Hibernate, JS, JPA Web Application with MVC design pattern.</label>
 
 <br/>
-<label><b>Home page</b></label>
+<label><b>Home page :</b></label>
+<br/>
 <img src="https://github.com/Coder-ACJHP/Personal-Information-MVC/blob/master/WebContent/images/FB_IMG_1494872305120.jpg">
 <hr>
-<label><b>Personal list page</b></label>
+<label><b>Personal list page :</b></label>
+<br/>
 <img src="https://github.com/Coder-ACJHP/Personal-Information-MVC/blob/master/WebContent/images/FB_IMG_1494872309968.jpg">
 <hr>
-<label><b>Edit person page</b></label>
+<label><b>Edit person page : </b></label>
+<br/>
 <img src="https://github.com/Coder-ACJHP/Personal-Information-MVC/blob/master/WebContent/images/FB_IMG_1494872313114.jpg">
 
 <h1>Contact:</h1>
