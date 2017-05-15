@@ -1,5 +1,5 @@
 # Simple Personal-Information-MVC
-<label>Servlet-JSP, Hibernate Web Application with MVC design pattern.</label>
+<label>Servlet-JSP, Hibernate, JS, JPA Web Application with MVC design pattern.</label>
 
 <br/>
 <label><b>Home page</b></label>
