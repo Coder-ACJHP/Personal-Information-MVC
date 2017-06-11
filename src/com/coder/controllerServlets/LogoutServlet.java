@@ -39,7 +39,7 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
         if(session != null){
             session.invalidate();
         }
-        response.sendRedirect("Index.html");
+        response.sendRedirect("Index.jsp");
     }
 
     @Override

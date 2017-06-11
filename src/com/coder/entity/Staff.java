@@ -41,6 +41,9 @@ public class Staff implements Serializable{
     @Column(name="PASSWORD")
     private String Password;
 
+    @Column(name="EMAIL")
+    private String EMAIL;
+    
     public Long getId() {
         return Id;
     }
@@ -65,21 +68,29 @@ public class Staff implements Serializable{
         this.Password = Password;
     }
 
-    public Staff(String UserName, String Password) {
+    public String getEMAIL() {
+		return EMAIL;
+	}
+
+	public void setEMAIL(String eMAIL) {
+		EMAIL = eMAIL;
+	}
+
+	public Staff(String UserName, String Password) {
         this.UserName = UserName;
         this.Password = Password;
     }
 
-    public Staff(Long Id, String UserName, String Password) {
-        this.Id = Id;
-        this.UserName = UserName;
-        this.Password = Password;
-    }
-
-    @Override
-    public String toString() {
-        return "Staff{" + "Id=" + Id + ", UserName=" + UserName + ", Password=" + Password + '}';
-    }
     
+    public Staff(String UserName, String Password, String theEmail) {
+        this.EMAIL = theEmail;
+        this.UserName = UserName;
+        this.Password = Password;
+    }
+
+	@Override
+	public String toString() {
+		return "Staff [Id=" + Id + ", UserName=" + UserName + ", Password=" + Password + ", EMAIL=" + EMAIL + "]";
+	}
     
 }

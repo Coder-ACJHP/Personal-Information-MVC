@@ -7,6 +7,7 @@ package com.coder.controllerServlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,35 +24,35 @@ import com.coder.dao.CurdOperationsImpl;
 @WebServlet(name = "DeleteServlet", urlPatterns = {"/DeleteServlet"})
 public class DeleteServlet extends HttpServlet {
 
-/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
+	private final  CurdOperationsImpl operationFactory = new CurdOperationsImpl();
+	private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         LOGGER.info("Fletching person id who wonted to be delete... ");
         String PersonId = request.getParameter("id");
         if(PersonId != null) {
             
             int id = Integer.parseInt(PersonId);
-            CurdOperationsImpl coi = new CurdOperationsImpl();
-            coi.remove(id);
+           
+            operationFactory.remove(id);
             LOGGER.info("Servlet says : Person has been deleted successfully.");
             out.println("<h2 style='color: green'>Person Deleted Sucessfully.</h2>");
-            response.sendRedirect("viewPerson.jsp");
+            response.sendRedirect("ViewPerson.jsp");
         }else {
-            
+            LOGGER.log(Level.WARNING, "Requested Id not found!");
         }
     }
 
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

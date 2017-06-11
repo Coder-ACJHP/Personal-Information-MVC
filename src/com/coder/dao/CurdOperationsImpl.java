@@ -1,17 +1,16 @@
 package com.coder.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import com.coder.entity.Person;
+import com.coder.entity.Staff;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,14 +24,10 @@ import com.coder.entity.Person;
 
 public class CurdOperationsImpl implements CurdOperations {
 
-    private final String Host = "jdbc:mysql://localhost/onurdatabase";
-    private final String user = "onur";
-    private final String psw = "onurdb958";
     private static SessionFactory SESSION_FACTORY;
     private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
 
-    @SuppressWarnings("deprecation")
-	public SessionFactory setSessionFactory() {
+	public SessionFactory getSessionFactory() {
         SESSION_FACTORY = new Configuration().
                             configure("com/coder/hibernateConfig/hibernate.cfg.xml").
                             addAnnotatedClass(Person.class).
@@ -42,7 +37,7 @@ public class CurdOperationsImpl implements CurdOperations {
 
     @Override
     public void save(Person person) {
-        Session session = setSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.persist(person);
         session.getTransaction().commit();
@@ -51,9 +46,9 @@ public class CurdOperationsImpl implements CurdOperations {
 
     @Override
     public void remove(int id) {
-        Session session = setSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Person person = (Person) session.load(Person.class, id);
+        Person person = session.load(Person.class, id);
 
         if (person != null) {
             session.delete(person);
@@ -64,19 +59,18 @@ public class CurdOperationsImpl implements CurdOperations {
 
     @Override
     public void update(Person person) {
-        Session session = setSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.update(person);
         session.getTransaction().commit();
         LOGGER.info("Person updated successfully." + " Details : " + person);
     }
 
-    @SuppressWarnings("unchecked")
 	@Override
     public List<Person> readAll() {
-        Session session = setSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<Person> personalList = session.createQuery("from Person").list();
+        List<Person> personalList = session.createQuery("from Person",Person.class).list();
         personalList.forEach((person) -> {
             LOGGER.info("PersonList : " + person);
         });
@@ -85,9 +79,9 @@ public class CurdOperationsImpl implements CurdOperations {
 
     @Override
     public Person getPersonById(int id) {
-        Session session = setSessionFactory().getCurrentSession();
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Person person = (Person) session.load(Person.class, id);
+        Person person = session.load(Person.class, id);
         LOGGER.info("Getting the Person." + "Details : " + person.getID());
         return person;
     }
@@ -95,44 +89,34 @@ public class CurdOperationsImpl implements CurdOperations {
     @Override
     public boolean checkAuth(String UserName, String Password) {
         boolean isStaff = false;
+        Session session = getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query<Staff> query = session.createQuery("from Staff where USERNAME=:userName and PASSWORD=:password",Staff.class);
+        query.setParameter("userName", UserName);
+        query.setParameter("password", Password);
+        
+       List<Staff> staffList = query.getResultList();
+       
+       if(!staffList.isEmpty() && staffList.size() > 0) {
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(Host,user,psw);
-            String sql = "SELECT * FROM `staff` WHERE `USERNAME`=? AND `PASSWORD`=?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, UserName);
-            ps.setString(2, Password);
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                isStaff = rs.getString("USERNAME").equals(UserName) && rs.getString("PASSWORD").equals(Password);
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            LOGGER.info("Getting the Person." + "Details : " + ex.getMessage());
-        }
-        return isStaff;
+           isStaff = true;
+       }else {
+    	   isStaff = false;
+    	   LOGGER.log(Level.WARNING,"BAD CREDENTIALS : " + UserName +": ******");
+       }
+       
+       session.close();
+       return isStaff;
     }
 
     @Override
-    public boolean addNewUser(String name, String password, String email) {
-        boolean isNewUser = false;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(Host,user,psw);
-            String sql = "INSERT INTO `staff`(`USERNAME`, `PASSWORD`, `EMAIL`) VALUES (?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, name);
-            ps.setString(2, password);
-            ps.setString(3, email);
-            int result =  ps.executeUpdate();
-            if(result > 0) {
-                isNewUser = true;
-            }
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            LOGGER.info("Adding the new User." + "Details : " + ex.getMessage());
-        }
-        return isNewUser;
+    public void addNewUser(String name, String password, String email) {
+        
+        Session session = getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Staff staff = new Staff(name, password, email);
+        session.saveOrUpdate(staff);
+        session.getTransaction().commit();
+        session.close();
     }
 }

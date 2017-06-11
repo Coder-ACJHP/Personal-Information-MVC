@@ -8,6 +8,7 @@ package com.coder.controllerServlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,6 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
             response.sendRedirect("ViewPerson.jsp");
             LOGGER.info("Staff is logged in." + " Details : " +username+":"+password);
         }else {
-            
             request.getRequestDispatcher("Index.jsp").include(request, response);
             out.println("<h2 style='color:red;'>Invalid username or password!</h2>");
           

@@ -26,7 +26,7 @@ public interface CurdOperations {
     
     public Person getPersonById(int id);
     
-    public boolean addNewUser(String name, String password, String email);
+    public void addNewUser(String name, String password, String email);
     
     public boolean checkAuth(String Name, String Password);
 }

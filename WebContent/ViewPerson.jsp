@@ -11,6 +11,8 @@
 <%@page import="com.coder.entity.*" %>
 <%@page import="java.util.List" %>
 <%@page errorPage="ErrorPage.jsp" %>
+<%@page import="org.apache.commons.codec.binary.Base64" %>
+<%@ taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,10 +31,12 @@
         <tr>
             <th>PHOTO</th><th>NAME</th><th>LASTNAME</th><th>NATIONALITY</th><th>BIRTHDATE</th><th>PHONE NUM.</th><th>ADDRESS</th><th>EMAIL</th><th>MARRIAGE</th><th>ABOUT</th><th>Edit</th><th>Delete</th>
         </tr>
-        <%          
+        <%    
+        	
             for (Person person : personList) {
+            	
         %>
-        <tr><td><img src="${pageContext.servletContext.contextPath}/util/retrieveImage?id=<%=person.getID()%>" width="50" height="50" alt="no image"/></td><td> <%=person.getNAME()%></td>
+        <tr><td><img src="data:image/jpeg;base64,<%=person.getPHOTO()%>" width="50" height="50" alt="no image"/></td><td> <%=person.getNAME()%></td>
         <td><%=person.getLASTNAME()%> </td><td><%=person.getNATIONALITY()%></td><td><%=person.getBIRTHDATE()%></td><td> <%=person.getPHONENUM()%></td><td> <%=person.getADDRESS()%><td><%=person.getEMAIL()%></td>
         <td><%=person.getMARRIAGESTATUS()%></td><td><%=person.getABOUT()%></td>
         <td> <a href="EditPerson.jsp?id=<%=Integer.toString(person.getID())%>">edit</a> </td>

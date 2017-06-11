@@ -8,8 +8,13 @@ and open the template in the editor.
     Author     : CODER ACJHP
 */
 html {
+	padding: 0px;
+	margin: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	height: 100%;
+	width: 100%;
 }
+
 body {
 	width: 100%;
 	height: 100%;
@@ -30,10 +35,12 @@ body {
 	background-size: cover;
 }
 
-input {
+.input {
 	width: 300px;
 	height: 40px;
 	margin-left: 80px;
+	font-size: 16px;
+	font-family: Verdana;
 }
 
 .wrong {

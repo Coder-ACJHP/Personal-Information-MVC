@@ -21,20 +21,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
  * @author CODER ACJHP
  */
-@WebServlet(name = "UpdateServlet", urlPatterns = {"/UpdateServlet"})
 @MultipartConfig(maxFileSize=16177215)
+@WebServlet(name = "UpdateServlet", urlPatterns = {"/UpdateServlet"})
 public class UpdateServlet extends HttpServlet {
 
 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
+	private final CurdOperationsImpl opreationsFactory = new CurdOperationsImpl();
+	private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -59,16 +61,20 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
          
          byte[] photo = new byte[0];
          String message = "";
+         String base64encoded = "";
+         
          if(filePart != null) {
             message = "File " + filePart.getName() + " Size :" + filePart.getSize() + " is uploaded.";
             LOGGER.info("Details : " + message);
             inputStream = filePart.getInputStream();  
             photo = IOUtils.toByteArray(inputStream);
+            byte[] encode = Base64.encodeBase64(photo);
+        	base64encoded = new String(encode);
          }
          
-         CurdOperationsImpl coi = new CurdOperationsImpl();
-         Person person = new Person(PersonId, Name, Lastname, Nationality, Birthdate, PhoneNum, Address, Email, Marriage, About,photo);
-         coi.update(person);
+         
+         Person person = new Person(PersonId, Name, Lastname, Nationality, Birthdate, PhoneNum, Address, Email, Marriage, About, base64encoded);
+         opreationsFactory.update(person);
          
          out.println("<h2 style='color: green'>Person Updated Sucessfully.</h2>");
          LOGGER.info("Person Updated Sucessfully." + " Details : " + person);
@@ -79,6 +85,6 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

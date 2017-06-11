@@ -65,8 +65,8 @@ public class Person implements Serializable {
     @Column(name="ABOUT")
     private String ABOUT;
     
-    @Column(name="PHOTO", nullable = true, columnDefinition = "mediumblob")
-    private byte[] PHOTO;
+    @Column(name="PHOTO")
+    private String PHOTO;
 
     public int getID() {
         return ID;
@@ -148,15 +148,15 @@ public class Person implements Serializable {
         this.ABOUT = ABOUT;
     }
 
-    public byte[] getPHOTO() {
+    public String getPHOTO() {
         return PHOTO;
     }
 
-    public void setPHOTO(byte[] PHOTO) {
+    public void setPHOTO(String PHOTO) {
         this.PHOTO = PHOTO;
     }
 
-    public Person(int ID, String NAME, String LASTNAME, String NATIONALITY, String BIRTHDATE, String PHONENUM, String ADDRESS, String EMAIL, String MARRIAGESTATUS, String ABOUT, byte[] PHOTO) {
+    public Person(int ID, String NAME, String LASTNAME, String NATIONALITY, String BIRTHDATE, String PHONENUM, String ADDRESS, String EMAIL, String MARRIAGESTATUS, String ABOUT, String PHOTO) {
         this.ID = ID;
         this.NAME = NAME;
         this.LASTNAME = LASTNAME;
@@ -170,7 +170,7 @@ public class Person implements Serializable {
         this.PHOTO = PHOTO;
     }
 
-    public Person(String NAME, String LASTNAME, String NATIONALITY, String BIRTHDATE, String PHONENUM, String ADDRESS, String EMAIL, String MARRIAGESTATUS, String ABOUT, byte[] PHOTO) {
+    public Person(String NAME, String LASTNAME, String NATIONALITY, String BIRTHDATE, String PHONENUM, String ADDRESS, String EMAIL, String MARRIAGESTATUS, String ABOUT, String PHOTO) {
         this.NAME = NAME;
         this.LASTNAME = LASTNAME;
         this.NATIONALITY = NATIONALITY;

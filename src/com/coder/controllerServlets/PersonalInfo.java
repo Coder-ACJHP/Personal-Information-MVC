@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
@@ -33,7 +34,8 @@ public class PersonalInfo extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
+	private final  CurdOperationsImpl operationsFactory = new CurdOperationsImpl();
+	private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -55,33 +57,34 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
         LOGGER.info("Getting personal informations from : AddPerson.jsp");
         
         String message = "";
+        String base64encoded="";
         byte[] photo = new byte[0];
+        
         if (filePart != null) {
             message = "File " + filePart.getName() + " Size :" + filePart.getSize() + " is uploaded.";
             LOGGER.info("Details : " + message);
             inputStream = filePart.getInputStream();
             photo = IOUtils.toByteArray(inputStream);
+            byte[] encode = Base64.encodeBase64(photo);
+        	base64encoded = new String(encode);
         }
 
-        CurdOperationsImpl coi = new CurdOperationsImpl();
-        Person person = new Person(Name, Lastname, Nationality, Birthdate, PhoneNum, Address, Email, Marriage, About,photo);
-        coi.save(person);
+       
+        Person person = new Person(Name, Lastname, Nationality, Birthdate, PhoneNum, Address, Email, Marriage, About, base64encoded);
+        operationsFactory.save(person);
         
         out.println("<h2 style='color: cyan'>Person Saved Sucessfully.</h2>");
         LOGGER.info("Person saved to database." + " Details : " + person);
         request.setAttribute("Message", message);
-        request.getRequestDispatcher("AddPerson.jsp").include(request, response);
+        request.getRequestDispatcher("ViewPerson.jsp").forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 
 }
