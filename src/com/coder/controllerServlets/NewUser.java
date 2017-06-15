@@ -6,7 +6,6 @@
 package com.coder.controllerServlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -33,7 +32,6 @@ public class NewUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            PrintWriter out = response.getWriter();
             response.setContentType("text/html");
 
             String name = request.getParameter("name");
@@ -49,16 +47,15 @@ public class NewUser extends HttpServlet {
             	operationFactory.addNewUser(nickName, password, email);
 
 			    clear(name, lastName, nickName, password, password2, email);
-			    response.sendRedirect("Index.jsp");
-			    out.write("<h2 style='color: green'>New user added successfully.</h2>");
-			        
+			    request.setAttribute("Message", nickName +" added successfully.");
+			    request.getRequestDispatcher("Index.jsp").forward(request, response);			        
 			    LOGGER.info("New user added successfully.");
 			   
 			}else {
 				
-			    request.getRequestDispatcher("AddUser.html").include(request, response);
-			    out.print("<h2 style='color: red'>Passwords are must be same!</h2>");
-			    LOGGER.info("Inputted passwords are not same!");
+				request.setAttribute("Message", "Fatal error : Passwords are not equals!");
+			    request.getRequestDispatcher("AddUser.jsp").include(request, response);
+			    LOGGER.info("Two passwords are not same!");
 			}  
         
     }

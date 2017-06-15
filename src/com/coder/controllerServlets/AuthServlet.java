@@ -6,7 +6,6 @@
 package com.coder.controllerServlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -33,7 +32,6 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         
         String username = request.getParameter("username");
@@ -48,12 +46,12 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
             session.setAttribute("user", username);
             session.setMaxInactiveInterval(15*60);
 
-            out.println("<h2 style='color:blue;'>Login successfully.</h2>");
-            response.sendRedirect("ViewPerson.jsp");
+            
             LOGGER.info("Staff is logged in." + " Details : " +username+":"+password);
+            request.getRequestDispatcher("ViewPerson.jsp").include(request, response);
         }else {
+        	request.setAttribute("Message", "Bad credentials! Please try again!");
             request.getRequestDispatcher("Index.jsp").include(request, response);
-            out.println("<h2 style='color:red;'>Invalid username or password!</h2>");
           
         }
     }

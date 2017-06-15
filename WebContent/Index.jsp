@@ -1,73 +1,56 @@
+<%@ taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-    <title>JSP & SERVLET</title>
-    <style>
-    .btn3 {
-        
-    width: 90px;
-    height: 30px;  
-    font-family: verdana;
-    }   
-    </style>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>JSP &amp; SERVLET</title>  
+	    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+	    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/login-form.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta charset="UTF-8">
 </head>
 <body>
-<div align="center">
-    <h1 style="color: #660066; font-size: 70px; ">Welcome to Personal Info Project</h1>
-    <h3 style="color: #000000; font-size: 20px; ">This is a test application, made by <br> Servlet & JSP, SQL, Hibernate, HTML, CSS, JS techologies</h3>
-</div>
-<div align="center">
-    <img class="mySlides" src="images/cloud-info.jpg" style="width:40%;" alt="Cloud">
-    <img class="mySlides" src="images/personal.png" style="width:40%;"  alt="Person1">
-    <img class="mySlides" src="images/personal2.png" style="width:40%;" alt="Person2">
-</div>
-<script>
-var myIndex = 0;
-carousel();
-
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-      x[i].style.display = "none";  
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}    
-    x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 3500);    
-}
-</script>
+<div align="center" style="background: linear-gradient(to top, #00C9FF, #92FE9D);">
+    <h1 style="color: #660066; font-size: 70px; ">Personal Info Project</h1>
+    <h3 style="color: #000000; font-size: 20px; ">This is a test application, made by <br> Servlet &amp; JSP, SQL, Hibernate, HTML, CSS, JS techologies</h3>
 <hr style="color: gray">
-<div align="center">    
-    <form action="AuthServlet" method="post">
-        <fieldset style="width: 30%; color: black; background: linear-gradient(to right, #66ccff,#0066cc);">
-            <legend><b>Login :</b></legend>
-            <table>
-                <tr>
-                    <td>User name :</td><td> <input type="text" name="username" value="" placeholder="Coder" required /></td>
-                </tr>
-                <tr>
-                    <td>Password :</td><td> <input type="password" name="password" value="" placeholder="XXXXXXX" required/></td>
-                </tr>
-                <tr>
-                    <td></td>    
-                    <td><input class="correct" type="submit" value="Submit" /> <input class="wrong" type="reset" value="Clear" />  <a class ="createUser" href="AddUser.jsp">Sign up</a> </td>
-                   
-                </tr>
-            </table>
-        </fieldset>
-                <p>Posted by: Coder ACJHP</p>
+	
+	<div class="row">
+    	<div class="col-md-8 col-md-offset-2">
+		    <!-- Give some information to user after redirecting from register page -->
+			<c:set value="${requestScope.Message}" var="msg" />
+			<c:if test="${not empty msg}">
+				<div class="alert alert-danger">
+				  <strong>Info!</strong> ${msg}.
+				</div>
+			</c:if>
+		</div>
+	</div>
+    <div class = "container">
+	<div class="wrapper">
+	<div class="col-md-6 col-md-offset-3">
+    	<form action="AuthServlet" method="post">
+		    <h3 class="form-signin-heading">Welcome Back! Please Sign In or <a href="AddUser.jsp">SignUp</a></h3>
+			  <hr class="colorgraph"><br>
+			  
+			  <input type="text" class="form-control" name="username" placeholder="Username" required="required" />
+			  <input type="password" class="form-control" name="password" placeholder="Password" required="required"/>     		  
+			 
+			  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">
+			  		<span class="glyphicon glyphicon-log-in"></span>  Login
+			  </button>  			
+		</form>	
+	</div>			
+	</div>
+</div><br>    
+	<div class="row">
+				<p>Posted by: Coder ACJHP</p>
                 <p>Contact information: <a href="mailto:hexa.octabin@gmail.com">hexa.octabin@gmail.com</a></p>
-                <p><script>var today = new Date(); document.write(today);</script></p> 
-    </form>
+                <p><%=new java.util.Date()%></p> 
+	</div> 
 </div>
 </body>
 </html>

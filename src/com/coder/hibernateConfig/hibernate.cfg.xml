@@ -6,7 +6,7 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost/personalInfo?useUnicode=yes&amp;characterEncoding=utf8</property>
     <property name="hibernate.connection.username">Coder</property>
     <property name="hibernate.connection.password">CoderDb958</property>
-    <property name="hibernate.connection.pool_size">1</property>
+    <property name="hibernate.connection.pool_size">20</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.CharSet">utf8</property>
     <property name="hibernate.connection.characterEncoding">utf8</property>

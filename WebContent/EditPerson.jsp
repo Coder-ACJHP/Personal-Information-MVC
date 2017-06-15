@@ -12,14 +12,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/edit.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <title>EDIT PERSON</title>
 </head>
 <body>
     <%
-    	String base64encoded = null;
+/*	Here fetching person from db who wanted to edit him/her informations (by ID) */
         CurdOperationsImpl coi = new CurdOperationsImpl();
         int id = Integer.parseInt(request.getParameter("id"));
         Person person = new Person();
@@ -29,71 +32,89 @@
         
         }
     %>
-<div align="center" class="viewTable">
-    <h1 style="color: #660066; font-size: 80px; margin-bottom: 20px;"> Edit Person Form</h1>
-    <form action="UpdateServlet" method="post" enctype="multipart/form-data">
-        <table border="1px" width="50%" style="font-family: verdana; font-size:20px; margin-top: 0; margin-bottom: 20px;
-         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(245,254,255,1)), color-stop(48%, rgba(127,234,235,1)), color-stop(100%, rgba(0,214,214,1)));;">
-            <tr>
-                <td colspan="2" style="text-align:center; font-size: 0;"><img src="data:image/jpeg;base64,<%=person.getPHOTO()%>" width="250" height="250" alt="no image"/>
-            	<h2><%=person.getNAME() + " " + person.getLASTNAME()%></h2> </td>
-            	
-            </tr>
-            <tr>
-                <td>First name:${request.contextPath}</td>
-            <td><input type="text" name="firstname" required="required" value="<%=person.getNAME()%>" class="input" /></td>
-            </tr>   
-            <tr>
-                <td>Last name:</td>
-            <td><input type="text" name="lastname" required="required" value="<%=person.getLASTNAME()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Nationality:</td>
-            <td><input type="text" name="nationality" required="required" value="<%=person.getNATIONALITY()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Birthdate:</td>
-            <td><input type="text" name="birthdate" required="required" value="<%=person.getBIRTHDATE()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Phone Number:</td>
-            <td><input type="text" name="phoneNum" required="required" value="<%=person.getPHONENUM()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Address:<br></td>
-            <td><input type="text" name="address" required="required" value="<%=person.getADDRESS()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-            <td><input type="email" name="email" required="required" value="<%=person.getEMAIL()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Marriage Status:</td>
-            <td><input type="text" name="marriage"  value="<%=person.getMARRIAGESTATUS()%>" size="55"/></td>
-            </tr>
-            <tr>
-                <td>About:</td>
-            <td><input class="about" type="text" name="about" value="<%=person.getABOUT()%>" size="35"/></td>
-            </tr>
-            <tr>
-                <td>Change Photo:<br></td>
-                <td><input type="file" name="photo" value="<%=person.getPHOTO()%>"/></td>
-            </tr>
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td><input class="correct" type="submit" value="Submit"  ></input>
-                </td><td><input class="wrong" type="reset" value="Clear"   ></input>
-                </td><td><button class="view" onClick="location.href = 'ViewPerson.jsp'" >View</button>
-                </td><td><button class="logut" onClick="location.href = 'Index.jsp'" >Logout</button></td>
-            </tr>
-        </table>
-    </form>  
+    
+<div align="center" style="background: linear-gradient(to top, #00C9FF, #92FE9D);">
+    <h1 style="color: purple; font-size: 3em; margin-bottom: 0;">Edit Person Form</h1>
+    <h4>Please edit the informations below</h4>
+    
+    	<div class="container">
+		<div class="row">
+			<div class="panel panel-primary">
+				<div class="panel-body">
+    				<form action="UpdateServlet" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<img src="data:image/jpeg;base64,<%=person.getPHOTO()%>" class="img-thumbnail" 
+																alt="Profile picture" width="250" height="250"> 
+								<h2><%=person.getNAME() + " " + person.getLASTNAME()%></h2>
+								<hr>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="firstname">First name: </label>
+							<input type="text" id="firstname" name="firstname" maxlength="50" class="form-control" value="<%=person.getNAME()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="lastname">Last name: </label>
+							<input type="text" id="lastname" name="lastname" maxlength="50" class="form-control" value="<%=person.getLASTNAME() %>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="nationality">Nationality: </label>
+							<input id="nationality" name="nationality" type="text" maxlength="50" class="form-control" value="<%=person.getNATIONALITY()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="birthdate">Birthdate: </label>
+							<input name="birthdate" id="birthdate" type="text" maxlength="50" class="form-control" value="<%=person.getBIRTHDATE()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="phoneNum">Phone Number: </label>
+							<input name="phoneNum" type="text" id="phoneNum" maxlength="50" class="form-control" value="<%=person.getPHONENUM()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="email">Email: </label>
+							<input name="email" type="email" id="email" maxlength="50" class="form-control" value="<%=person.getEMAIL()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="address">Address: </label>
+							<input name="address" type="text" id="address" maxlength="50" class="form-control" value="<%=person.getADDRESS()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="marriage">Marriage Status: </label>
+							<input name="marriage" type="text" id="marriage" maxlength="50" class="form-control" value="<%=person.getMARRIAGESTATUS()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="about">About</label>
+							<input name="about" type="text" id="about" class="form-control"  maxlength="300" value="<%=person.getABOUT()%>">
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="photo">Profile Picture :</label>
+							<input type="file" name="photo" id="photo" class="form-control" placeholder=".jpg - .png - .gif">
+						</div>
+						<div class="row">
+					    	<div class="col-md-6 col-md-offset-3">
+							   	<div class="btn-group btn-group-justified">
+							        <div class="btn-group">    
+							            <button class="btn btn-success" type="submit">
+							            	<span class="glyphicon glyphicon-ok"></span> Submit
+							            </button>
+							        </div> 
+							        <div class="btn-group">    
+							            <button class="btn btn-danger" type="reset">
+							            	<span class="glyphicon glyphicon-trash"></span> Clear
+							            </button>
+							        </div>
+							     </div>
+					        </div>
+					     </div> 
+					</form>
+				</div>
+			</div>
+		</div>
+	</div><br/>
+    <div class="row">
                 <p>Posted by: Coder ACJHP</p>
                 <p>Contact information: <a href="mailto:hexa.octabin@gmail.com">
                         hexa.octabin@gmail.com</a>.</p>
-                <p><%=new java.util.Date()%> </p>       
+                <p><%=new java.util.Date()%> </p>  
+   </div>                  
   </div>
 </body>
 </html>

@@ -41,21 +41,26 @@ private ServletContext context;
         HttpServletResponse res = (HttpServletResponse) response;
         
         String uri = req.getRequestURI();
-        if(uri.toLowerCase().endsWith("html") ||uri.toLowerCase().contains("AddUser.html")) {
+        if(uri.toLowerCase().contains("AddUser.jsp") || uri.toLowerCase().contains("Index.jsp")) {
+        	LOGGER.info("INFO : Uri contains filtered addreses, continue...");
             chain.doFilter(request, response);
+            
         }else {
             HttpSession session = req.getSession(false);
             if(session == null) {
-                res.sendRedirect("Index.html");
+            	LOGGER.info("WARNING : Session is null redirecting to login page!");
+                res.sendRedirect("Index.jsp");
                 return;
             }
             
             String personName = (String) session.getAttribute("user");
+            LOGGER.info("SEESION HOLDING User : " + personName);
+            
             if(personName.equals(" ") || personName.length() == 0) {
-                res.sendRedirect("Index.html");
+            	LOGGER.info("WARNING : Session userName is null redirecting to login page!");
+                res.sendRedirect("Index.jsp");
                 return;
             }
-            chain.doFilter(request, response);
         }        
     }
 

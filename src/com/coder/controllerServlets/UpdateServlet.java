@@ -5,13 +5,10 @@
  */
 package com.coder.controllerServlets;
 
-import com.coder.dao.CurdOperationsImpl;
-import com.coder.entity.Person;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
+
+import com.coder.dao.CurdOperationsImpl;
+import com.coder.entity.Person;
 
 /**
  *
@@ -42,8 +43,8 @@ public class UpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         InputStream inputStream;
+        final StringBuilder sb = new StringBuilder();
         
         HttpSession session = request.getSession();
         int PersonId =(int)session.getAttribute("id");
@@ -60,26 +61,31 @@ public class UpdateServlet extends HttpServlet {
         Part filePart = request.getPart("photo");
          
          byte[] photo = new byte[0];
-         String message = "";
          String base64encoded = "";
          
          if(filePart != null) {
-            message = "File " + filePart.getName() + " Size :" + filePart.getSize() + " is uploaded.";
-            LOGGER.info("Details : " + message);
+        	 sb.append("File " + filePart.getName() + " size :" + filePart.getSize() + " is uploaded.\n");
+            LOGGER.info("Details : " + sb.toString());
             inputStream = filePart.getInputStream();  
             photo = IOUtils.toByteArray(inputStream);
             byte[] encode = Base64.encodeBase64(photo);
         	base64encoded = new String(encode);
+         }else {
+        	 Person temPerson = opreationsFactory.getPersonById(PersonId);
+        	 if(temPerson != null)
+        		 base64encoded = new String(temPerson.getPHOTO());
+        	 sb.append("Person profile picture not changed!");
          }
          
          
-         Person person = new Person(PersonId, Name, Lastname, Nationality, Birthdate, PhoneNum, Address, Email, Marriage, About, base64encoded);
+         Person person = new Person(PersonId, Name, Lastname, Nationality, Birthdate, 
+        		 				PhoneNum, Address, Email, Marriage, About, base64encoded);
          opreationsFactory.update(person);
          
-         out.println("<h2 style='color: green'>Person Updated Sucessfully.</h2>");
          LOGGER.info("Person Updated Sucessfully." + " Details : " + person);
-         request.setAttribute("Message", message);
-         response.sendRedirect("ViewPerson.jsp");
+         sb.append("Person : "+person.getNAME()+" details updated sucessfully.");
+         request.setAttribute("Message", sb.toString());
+         request.getRequestDispatcher("ViewPerson.jsp").forward(request, response);
     }
 
     @Override

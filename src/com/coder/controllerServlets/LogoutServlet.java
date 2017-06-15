@@ -35,10 +35,13 @@ private static final Logger LOGGER = Logger.getLogger(CurdOperationsImpl.class.g
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        LOGGER.info("User : " + session.getAttribute("user"));
+        
         if(session != null){
+        
+        	LOGGER.info("User : " + session.getAttribute("user").toString());
             session.invalidate();
         }
+        
         response.sendRedirect("Index.jsp");
     }
 
